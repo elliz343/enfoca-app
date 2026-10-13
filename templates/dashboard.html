@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mis tareas | Enfoca</title>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a class="logo" href="/">Enfoca</a>
+  <nav>
+    <span id="saludo" style="color:var(--suave); font-size:.9rem;"></span>
+    <button class="btn btn-texto" id="btn-salir">Cerrar sesión</button>
+  </nav>
+</header>
+
+<main>
+  <div class="dash-header">
+    <h1>Mis tareas</h1>
+  </div>
+
+  <form class="form-tarea" id="form-tarea">
+    <div class="campo" style="margin:0;">
+      <label for="titulo">Tarea</label>
+      <input type="text" id="titulo" placeholder="Ej. Ensayo de historia" required>
+    </div>
+    <div class="campo" style="margin:0;">
+      <label for="materia">Materia</label>
+      <input type="text" id="materia" placeholder="Ej. Historia">
+    </div>
+    <div class="campo" style="margin:0;">
+      <label for="fecha">Fecha límite</label>
+      <input type="date" id="fecha">
+    </div>
+    <button class="btn btn-primario" type="submit">Agregar</button>
+  </form>
+
+  <hr class="divisor">
+
+  <div class="lista-tareas" id="lista-tareas">
+    <p style="color:var(--suave);">Cargando tareas...</p>
+  </div>
+</main>
+
+<footer>© 2026 Enfoca — Proyecto académico</footer>
+
+<script>
+async function cargarTareas() {
+  const cont = document.getElementById('lista-tareas');
+  const res = await fetch('/api/tareas');
+  if (res.status === 401) { window.location.href = '/login'; return; }
+  const tareas = await res.json();
+  if (tareas.length === 0) {
+    cont.innerHTML = '<p style="color:var(--suave);">No tienes tareas todavía. Agrega la primera arriba.</p>';
+    return;
+  }
+  cont.innerHTML = tareas.map(t => `
+    <div class="tarea" data-id="${t.id}">
+      <div class="info">
+        <strong>${t.titulo}</strong>
+        <span>${t.materia || 'Sin materia'} ${t.fecha ? '· vence ' + t.fecha : ''}</span>
+      </div>
+      <button class="borrar" onclick="borrarTarea(${t.id})">✕</button>
+    </div>
+  `).join('');
+}
+
+async function borrarTarea(id) {
+  await fetch('/api/tareas/' + id, { method: 'DELETE' });
+  cargarTareas();
+}
+
+document.getElementById('form-tarea').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  await fetch('/api/tareas', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      titulo: document.getElementById('titulo').value,
+      materia: document.getElementById('materia').value,
+      fecha: document.getElementById('fecha').value
+    })
+  });
+  document.getElementById('form-tarea').reset();
+  cargarTareas();
+});
+
+document.getElementById('btn-salir').addEventListener('click', async () => {
+  await fetch('/api/logout', { method: 'POST' });
+  window.location.href = '/';
+});
+
+(async () => {
+  const res = await fetch('/api/sesion');
+  if (res.status === 401) { window.location.href = '/login'; return; }
+  const data = await res.json();
+  document.getElementById('saludo').textContent = 'Hola, ' + data.nombre;
+  cargarTareas();
+})();
+</script>
+</body>
+</html>
