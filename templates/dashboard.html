@@ -47,7 +47,6 @@
 <footer>© 2026 Enfoca — Proyecto académico</footer>
   
 <script>
-  let tareasActuales = [];
 async function cargarTareas() {
   const cont = document.getElementById('lista-tareas');
   const res = await fetch('/api/tareas');
@@ -59,12 +58,8 @@ async function cargarTareas() {
     return;
   }
   cont.innerHTML = tareas.map(t => `
-  <div class="tarea ${t.completada ? 'completada' : ''}" data-id="${t.id}">      <div class="info">
-   <label>
-  <input type="checkbox" ${t.completada ? 'checked' : ''}
-    onchange="cambiarEstadoTarea(${t.id}, this.checked)">
-  Completada
-   </label>
+ <div class="tarea" data-id="${t.id}">
+  
     <strong>${t.titulo}</strong>
     <span>${t.materia || 'Sin materia'} ${t.fecha ? '· vence ' + t.fecha : ''}</span>
     </div>
@@ -72,27 +67,7 @@ async function cargarTareas() {
     </div>
   `).join('');
 }
-async function cambiarEstadoTarea(id, completada) {
-  const tarea = tareasActuales.find(t => t.id === id);
-  if (!tarea) return;
-
-  const res = await fetch(`/api/tareas/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      titulo: tarea.titulo,
-      materia: tarea.materia || '',
-      fecha: tarea.fecha || '',
-      completada: completada
-    })
-  });
-
-  if (!res.ok) {
-    const data = await res.json();
-    alert(data.error || 'No se pudo actualizar la tarea');
-  }
-
-  await cargarTareas();
+  
 }
   
 async function borrarTarea(id) {
