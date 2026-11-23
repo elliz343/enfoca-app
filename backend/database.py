@@ -46,12 +46,6 @@ class Database:
     fila["name"]
     for fila in cur.execute("PRAGMA table_info(tareas)").fetchall()
 }
-
-if "completada" not in columnas:
-    cur.execute(
-        "ALTER TABLE tareas "
-        "ADD COLUMN completada INTEGER NOT NULL DEFAULT 0"
-    )
         self.conexion.commit()
 
     def obtener_conexion(self):
