@@ -46,9 +46,8 @@
 
 <footer>© 2026 Enfoca — Proyecto académico</footer>
   
-let tareasActuales = [];
-  
 <script>
+  let tareasActuales = [];
 async function cargarTareas() {
   const cont = document.getElementById('lista-tareas');
   const res = await fetch('/api/tareas');
@@ -61,12 +60,11 @@ async function cargarTareas() {
   }
   cont.innerHTML = tareas.map(t => `
   <div class="tarea ${t.completada ? 'completada' : ''}" data-id="${t.id}">      <div class="info">
-    <label>
-    <input type="checkbox" ${t.completada ? 'checked' : ''}>
-   onchange="cambiarEstadoTarea(${t.id}, this.checked)">
-   
-    Completada
-    </label>
+   <label>
+  <input type="checkbox" ${t.completada ? 'checked' : ''}
+    onchange="cambiarEstadoTarea(${t.id}, this.checked)">
+  Completada
+   </label>
     <strong>${t.titulo}</strong>
     <span>${t.materia || 'Sin materia'} ${t.fecha ? '· vence ' + t.fecha : ''}</span>
     </div>
