@@ -98,7 +98,7 @@ def api_listar_tareas():
         return jsonify({"error": "No autenticado"}), 401
     tareas = tarea_service.listar_tareas(usuario_id)
     return jsonify([
-        {"id": t.id, "titulo": t.titulo, "materia": t.materia, "fecha": t.fecha}
+        {"id": t.id, "titulo": t.titulo, "materia": t.materia, "fecha": t.fecha, "completada": t.completada,}
         for t in tareas
     ])
 
@@ -119,7 +119,46 @@ def api_crear_tarea():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     return jsonify({"id": tarea.id}), 201
+    
+@app.route("/api/tareas/<int:tarea_id>", methods=["PUT"])
+def api_actualizar_tarea(tarea_id):
+    usuario_id = _requerir_sesion()
+    if not usuario_id:
+        return jsonify({"error": "No autenticado"}), 401
 
+    datos = request.get_json(silent=True)
+    if not isinstance(datos, dict):
+        return jsonify({"error": "Se esperaba un objeto JSON"}), 400
+
+    titulo = datos.get("titulo")
+    materia = datos.get("materia", "")
+    fecha = datos.get("fecha", "")
+    completada = datos.get("completada")
+
+    if (
+        not isinstance(titulo, str)
+        or not isinstance(materia, str)
+        or not isinstance(fecha, str)
+        or not isinstance(completada, bool)
+    ):
+        return jsonify({"error": "Los datos de la tarea no son válidos"}), 400
+
+    try:
+        actualizada = tarea_service.actualizar_tarea(
+            tarea_id,
+            usuario_id,
+            titulo.strip(),
+            materia.strip(),
+            fecha.strip(),
+            completada,
+        )
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+    if not actualizada:
+        return jsonify({"error": "Tarea no encontrada"}), 404
+
+    return jsonify({"ok": True})
 
 @app.route("/api/tareas/<int:tarea_id>", methods=["DELETE"])
 def api_eliminar_tarea(tarea_id):
