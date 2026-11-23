@@ -98,7 +98,7 @@ def api_listar_tareas():
         return jsonify({"error": "No autenticado"}), 401
     tareas = tarea_service.listar_tareas(usuario_id)
     return jsonify([
-        {"id": t.id, "titulo": t.titulo, "materia": t.materia, "fecha": t.fecha,}
+        {"id": t.id, "titulo": t.titulo, "materia": t.materia, "fecha": t.fecha}
         for t in tareas
     ])
 
