@@ -21,4 +21,3 @@ class Tarea:
     titulo: str
     materia: str
     fecha: str
-    
