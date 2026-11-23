@@ -39,9 +39,20 @@ class Database:
                 titulo TEXT NOT NULL,
                 materia TEXT,
                 fecha TEXT,
+                completada INTEGER NOT NULL DEFAULT 0,
                 FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
             )
         """)
+        columnas = {
+    fila["name"]
+    for fila in cur.execute("PRAGMA table_info(tareas)").fetchall()
+}
+
+if "completada" not in columnas:
+    cur.execute(
+        "ALTER TABLE tareas "
+        "ADD COLUMN completada INTEGER NOT NULL DEFAULT 0"
+    )
         self.conexion.commit()
 
     def obtener_conexion(self):
