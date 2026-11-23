@@ -69,25 +69,7 @@ class TareaRepository(BaseRepository):
         tarea.id = cur.lastrowid
         return tarea
         
-    def actualizar(self, tarea: Tarea) -> bool:
-        cur = self.conexion.cursor()
-        cur.execute(
-            """
-            UPDATE tareas
-            SET titulo = ?, materia = ?, fecha = ?, completada = ?
-            WHERE id = ? AND usuario_id = ?
-            """,
-            (
-                tarea.titulo,
-                tarea.materia,
-                tarea.fecha,
-                int(tarea.completada),
-                tarea.id,
-                tarea.usuario_id,
-            ),
-        )
-        self.conexion.commit()
-        return cur.rowcount > 0
+   
     def listar_por_usuario(self, usuario_id: int) -> List[Tarea]:
         cur = self.conexion.cursor()
         filas = cur.execute(
