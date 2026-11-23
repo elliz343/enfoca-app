@@ -22,7 +22,7 @@ class Database:
         self.conexion.row_factory = sqlite3.Row
         self._crear_tablas()
 
-        def _crear_tablas(self):
+    def _crear_tablas(self):
         cur = self.conexion.cursor()
         cur.execute("""
             CREATE TABLE IF NOT EXISTS usuarios (
@@ -43,3 +43,6 @@ class Database:
             )
         """)
         self.conexion.commit()
+
+    def obtener_conexion(self):
+        return self.conexion
