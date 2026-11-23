@@ -98,5 +98,4 @@ class TareaRepository(BaseRepository):
             titulo=fila["titulo"],
             materia=fila["materia"],
             fecha=fila["fecha"],
-            completada=bool(fila["completada"]),
         )
