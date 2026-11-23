@@ -68,8 +68,7 @@ class TareaRepository(BaseRepository):
         self.conexion.commit()
         tarea.id = cur.lastrowid
         return tarea
-        
-   
+
     def listar_por_usuario(self, usuario_id: int) -> List[Tarea]:
         cur = self.conexion.cursor()
         filas = cur.execute(
