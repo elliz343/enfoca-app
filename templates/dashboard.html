@@ -45,31 +45,28 @@
 </main>
 
 <footer>© 2026 Enfoca — Proyecto académico</footer>
-  
+
 <script>
 async function cargarTareas() {
   const cont = document.getElementById('lista-tareas');
   const res = await fetch('/api/tareas');
   if (res.status === 401) { window.location.href = '/login'; return; }
   const tareas = await res.json();
-  tareasActuales = tareas;
   if (tareas.length === 0) {
     cont.innerHTML = '<p style="color:var(--suave);">No tienes tareas todavía. Agrega la primera arriba.</p>';
     return;
   }
   cont.innerHTML = tareas.map(t => `
- <div class="tarea" data-id="${t.id}">
-  
-    <strong>${t.titulo}</strong>
-    <span>${t.materia || 'Sin materia'} ${t.fecha ? '· vence ' + t.fecha : ''}</span>
-    </div>
-    <button class="borrar" onclick="borrarTarea(${t.id})">✕</button>
+    <div class="tarea" data-id="${t.id}">
+      <div class="info">
+        <strong>${t.titulo}</strong>
+        <span>${t.materia || 'Sin materia'} ${t.fecha ? '· vence ' + t.fecha : ''}</span>
+      </div>
+      <button class="borrar" onclick="borrarTarea(${t.id})">✕</button>
     </div>
   `).join('');
 }
-  
-}
-  
+
 async function borrarTarea(id) {
   await fetch('/api/tareas/' + id, { method: 'DELETE' });
   cargarTareas();
