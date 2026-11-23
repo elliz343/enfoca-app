@@ -39,7 +39,6 @@ class Database:
                 titulo TEXT NOT NULL,
                 materia TEXT,
                 fecha TEXT,
-                completada INTEGER NOT NULL DEFAULT 0,
                 FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
             )
         """)
