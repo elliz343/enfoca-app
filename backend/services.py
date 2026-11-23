@@ -45,7 +45,7 @@ class TareaService:
             raise ValueError("La tarea necesita un título")
         tarea = Tarea(id=None, usuario_id=usuario_id, titulo=titulo, materia=materia, fecha=fecha)
         return self.tarea_repo.crear(tarea)
-        
+
     def listar_tareas(self, usuario_id: int):
         return self.tarea_repo.listar_por_usuario(usuario_id)
 
