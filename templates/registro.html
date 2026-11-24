@@ -6,34 +6,152 @@
 <title>Crear cuenta | Enfoca</title>
 <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body>
+<body class="pagina-registro">
 
 <header class="navbar">
   <a class="logo" href="/">Enfoca</a>
-  <nav><a class="btn btn-texto" href="/login">Iniciar sesión</a></nav>
+  <nav>
+    <span class="nav-pregunta">¿Ya tienes cuenta?</span>
+    <a class="btn btn-texto" href="/login">Iniciar sesión</a>
+  </nav>
 </header>
 
-<div class="panel-form">
-  <h2>Crea tu cuenta</h2>
-  <p class="sub">Empieza a organizar tus tareas en un minuto.</p>
-  <div id="mensaje" class="mensaje"></div>
-  <form id="form-registro">
-    <div class="campo">
-      <label for="nombre">Nombre</label>
-      <input type="text" id="nombre" required>
+<main class="registro-hero">
+  <section class="registro-presentacion">
+    <div class="registro-copy">
+      <h1>Un nuevo comienzo,</h1>
+      <h2><span>una mejor organización.</span></h2>
+      <p>Regístrate en Enfoca y empieza a planear tus tareas, cumplir tus metas y enfocarte en lo que realmente importa.</p>
     </div>
-    <div class="campo">
-      <label for="email">Correo</label>
-      <input type="email" id="email" required>
-    </div>
-    <div class="campo">
-      <label for="password">Contraseña</label>
-      <input type="password" id="password" minlength="6" required>
-    </div>
-    <button class="btn btn-primario" type="submit">Crear cuenta</button>
-  </form>
-  <a class="enlace-sutil" href="/login">¿Ya tienes cuenta? Inicia sesión</a>
-</div>
+
+    <svg class="registro-ilustracion" viewBox="0 0 800 500" aria-hidden="true">
+      <defs>
+        <g id="celdas">
+          <rect x="26" y="98" width="40" height="34" rx="8"/>
+          <rect x="76" y="98" width="40" height="34" rx="8"/>
+          <rect x="126" y="98" width="40" height="34" rx="8"/>
+          <rect x="226" y="98" width="40" height="34" rx="8"/>
+          <rect x="26" y="142" width="40" height="34" rx="8"/>
+          <rect x="126" y="142" width="40" height="34" rx="8"/>
+          <rect x="176" y="142" width="40" height="34" rx="8"/>
+          <rect x="226" y="142" width="40" height="34" rx="8"/>
+          <rect x="26" y="186" width="40" height="34" rx="8"/>
+          <rect x="76" y="186" width="40" height="34" rx="8"/>
+          <rect x="126" y="186" width="40" height="34" rx="8"/>
+          <rect x="176" y="186" width="40" height="34" rx="8"/>
+          <rect x="226" y="186" width="40" height="34" rx="8"/>
+        </g>
+      </defs>
+
+      <!-- Sombra en el suelo -->
+      <ellipse cx="430" cy="468" rx="340" ry="14" fill="#041a4d" opacity=".45"/>
+
+      <!-- Calendario -->
+      <g transform="translate(60 210) rotate(-8)">
+        <rect x="0" y="52" width="300" height="214" rx="28" fill="#1a3da0"/>
+        <rect x="0" y="40" width="300" height="214" rx="28" fill="#2f5fe0"/>
+        <rect x="14" y="66" width="272" height="176" rx="16" fill="#f2f5fe"/>
+        <rect x="14" y="66" width="272" height="28" rx="16" fill="#d9e2fa"/>
+        <rect x="14" y="80" width="272" height="14" fill="#d9e2fa"/>
+        <rect x="30" y="75" width="34" height="6" rx="3" fill="#9fb2e8"/>
+        <rect x="80" y="75" width="34" height="6" rx="3" fill="#9fb2e8"/>
+        <rect x="130" y="75" width="34" height="6" rx="3" fill="#9fb2e8"/>
+        <rect x="180" y="75" width="34" height="6" rx="3" fill="#9fb2e8"/>
+        <use href="#celdas" transform="translate(0 3)" fill="#c3cfee"/>
+        <use href="#celdas" fill="#e3e9fb"/>
+        <rect x="176" y="101" width="40" height="34" rx="8" fill="#1a3da0"/>
+        <rect x="176" y="98" width="40" height="34" rx="8" fill="#2f6bd8"/>
+        <rect x="76" y="145" width="40" height="34" rx="8" fill="#1a3da0"/>
+        <rect x="76" y="142" width="40" height="34" rx="8" fill="#2f6bd8"/>
+        <path d="M185 116l8 8 14-15M85 160l8 8 14-15" fill="none" stroke="#36e6a2" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="38" y="4" width="26" height="62" rx="13" fill="#1a3da0"/>
+        <rect x="42" y="8" width="18" height="54" rx="9" fill="#7ea0f7"/>
+        <rect x="137" y="4" width="26" height="62" rx="13" fill="#1a3da0"/>
+        <rect x="141" y="8" width="18" height="54" rx="9" fill="#7ea0f7"/>
+        <rect x="236" y="4" width="26" height="62" rx="13" fill="#1a3da0"/>
+        <rect x="240" y="8" width="18" height="54" rx="9" fill="#7ea0f7"/>
+      </g>
+
+      <!-- Portátil -->
+      <g transform="translate(540 258)">
+        <path d="M18 205L238 178Q258 176 258 192L262 206Q262 214 250 216L38 242Q20 244 18 230Z" fill="#8791b0"/>
+        <path d="M30 30L205 8L225 183L50 213Z" fill="#8b95b3" stroke="#8b95b3" stroke-width="14" stroke-linejoin="round"/>
+        <path d="M30 22L205 0L225 175L50 205Z" fill="#b9c2d9" stroke="#b9c2d9" stroke-width="14" stroke-linejoin="round"/>
+        <path d="M44 34L196 14L212 164L60 190Z" fill="#c9d0e4"/>
+        <g transform="rotate(-6 128 93)" fill="#2f5fe0">
+          <rect x="112" y="64" width="14" height="58" rx="3"/>
+          <rect x="112" y="64" width="44" height="13" rx="3"/>
+          <rect x="112" y="86" width="36" height="13" rx="3"/>
+          <rect x="112" y="109" width="44" height="13" rx="3"/>
+        </g>
+        <path d="M164 62l14-12M170 80l18-5" fill="none" stroke="#36e6a2" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <!-- Libro verde -->
+      <g transform="translate(200 380)">
+        <rect x="0" y="62" width="350" height="14" rx="7" fill="#1f9d72"/>
+        <rect x="14" y="36" width="326" height="30" rx="4" fill="#f4f7fb"/>
+        <path d="M22 44H334M22 52H334M22 60H334" stroke="#d3dbe8" stroke-width="1.5"/>
+        <rect x="0" y="22" width="350" height="16" rx="8" fill="#2fc58f"/>
+        <rect x="0" y="22" width="22" height="54" rx="9" fill="#25b07f"/>
+      </g>
+
+      <!-- Libro azul -->
+      <g transform="translate(225 330)">
+        <rect x="0" y="62" width="310" height="14" rx="7" fill="#1a3da0"/>
+        <rect x="14" y="36" width="286" height="30" rx="4" fill="#f4f7fb"/>
+        <path d="M22 44H294M22 52H294M22 60H294" stroke="#d3dbe8" stroke-width="1.5"/>
+        <rect x="0" y="22" width="310" height="16" rx="8" fill="#2f5fe0"/>
+        <rect x="0" y="22" width="22" height="54" rx="9" fill="#2a52c9"/>
+      </g>
+
+      <!-- Lápiz -->
+      <g transform="translate(325 372) rotate(-52)">
+        <polygon points="0,0 -34,15 0,30" fill="#f7d9a3"/>
+        <polygon points="-34,15 -22,9.5 -22,20.5" fill="#3a2a1a"/>
+        <rect x="0" y="0" width="170" height="30" fill="#f5b72c"/>
+        <rect x="0" y="0" width="170" height="8" fill="#fbd05a"/>
+        <rect x="0" y="22" width="170" height="8" fill="#e5a31d"/>
+        <rect x="170" y="0" width="14" height="30" fill="#c9ced9"/>
+        <rect x="184" y="0" width="26" height="30" rx="8" fill="#ff7e9a"/>
+      </g>
+
+      <!-- Dibujos de trazo: avioncito, birrete, destellos y línea punteada -->
+      <g fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M610 52L702 14 664 98 644 70Z"/>
+        <path d="M644 70L702 14M644 70L650 96"/>
+        <path d="M455 142L525 108 595 142 525 176Z"/>
+        <path d="M480 158v28c24 18 56 18 80 0v-28"/>
+        <path d="M588 146v40M588 186l-5 12M588 186l5 12"/>
+        <path d="M372 128Q376 146 394 150Q376 154 372 172Q368 154 350 150Q368 146 372 128Z"/>
+        <path transform="translate(30 330) scale(.7)" d="M0 -22Q4 -4 22 0Q4 4 0 22Q-4 4 -22 0Q-4 -4 0 -22Z"/>
+        <path stroke-width="2.4" stroke-dasharray="7 9" d="M716 120C780 116 790 176 748 192C700 207 662 218 684 258"/>
+      </g>
+    </svg>
+  </section>
+
+  <section class="panel-form">
+    <h2>Crea tu cuenta</h2>
+    <p class="sub">Únete a Enfoca y comienza a planear tu camino.</p>
+    <div id="mensaje" class="mensaje"></div>
+    <form id="form-registro">
+      <div class="campo">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" placeholder="Ej. María López" required>
+      </div>
+      <div class="campo">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
+      </div>
+      <div class="campo">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" placeholder="Crea una contraseña" minlength="6" required>
+      </div>
+      <button class="btn btn-primario" type="submit">Crear cuenta</button>
+    </form>
+    <a class="enlace-sutil" href="/login">¿Ya tienes cuenta? Inicia sesión</a>
+  </section>
+</main>
 
 <footer>© 2026 Enfoca — Proyecto académico</footer>
 
