@@ -3,7 +3,9 @@ Capa de servicios: contiene la lógica de negocio (validaciones,
 reglas de la app). Las rutas (main.py) solo reciben la petición HTTP
 y llaman a estos servicios; no saben nada de SQL (separación de capas).
 """
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
+import hashlib
+import secrets
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -20,7 +22,22 @@ class AuthService:
     def registrar(self, nombre: str, email: str, password: str) -> Usuario:
         if not nombre or not email or not password:
             raise ValueError("Todos los campos son obligatorios")
+    def crear_token_verificacion(self, email: str) -> str:
+        token = secrets.token_urlsafe(32)
+        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        expira = (
+            datetime.now(timezone.utc) + timedelta(hours=24)
+        ).isoformat()
 
+        self.usuario_repo.guardar_token_verificacion(
+            email, token_hash, expira
+        )
+        return token
+
+    def verificar_email(self, token: str) -> bool:
+        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        ahora = datetime.now(timezone.utc).isoformat()
+        return self.usuario_repo.verificar_email(token_hash, ahora)
         email = email.strip().lower()
         partes = email.split("@")
 
@@ -52,8 +69,10 @@ class AuthService:
         usuario = self.usuario_repo.obtener_por_email(email)
         if not usuario or not check_password_hash(usuario.password_hash, password):
             raise ValueError("Correo o contraseña incorrectos")
+        if not usuario.email_verificado:
+            raise ValueError("Confirma tu correo antes de iniciar sesión")
         return usuario
-
+    
 
 class TareaService:
     def __init__(self, tarea_repo: TareaRepository = None):
