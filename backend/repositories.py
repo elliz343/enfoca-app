@@ -37,6 +37,32 @@ class UsuarioRepository(BaseRepository):
             "SELECT * FROM usuarios WHERE email = ?", (email,)
         ).fetchone()
         return self._fila_a_usuario(fila) if fila else None
+    def guardar_token_verificacion(
+        self, email: str, token_hash: str, expira: str
+    ) -> None:
+        cur = self.conexion.cursor()
+        cur.execute(
+            "UPDATE usuarios "
+            "SET token_verificacion_hash = ?, token_verificacion_expira = ? "
+            "WHERE email = ?",
+            (token_hash, expira, email),
+        )
+        self.conexion.commit()
+
+    def verificar_email(self, token_hash: str, ahora: str) -> bool:
+        cur = self.conexion.cursor()
+        cur.execute(
+            "UPDATE usuarios "
+            "SET email_verificado = 1, "
+            "token_verificacion_hash = NULL, "
+            "token_verificacion_expira = NULL "
+            "WHERE token_verificacion_hash = ? "
+            "AND token_verificacion_expira > ?",
+            (token_hash, ahora),
+        )
+        verificado = cur.rowcount > 0
+        self.conexion.commit()
+        return verificado
 
     def obtener_por_id(self, id_: int) -> Optional[Usuario]:
         cur = self.conexion.cursor()
