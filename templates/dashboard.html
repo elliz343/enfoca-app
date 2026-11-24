@@ -82,7 +82,7 @@ async function borrarTarea(id) {
 document.getElementById('form-tarea').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  await fetch('/api/tareas', {
+  const res = await fetch('/api/tareas', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -91,6 +91,13 @@ document.getElementById('form-tarea').addEventListener('submit', async (e) => {
       fecha: document.getElementById('fecha').value
     })
   });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert(data.error || 'No se pudo agregar la tarea');
+    return;
+  }
 
   document.getElementById('form-tarea').reset();
   cargarTareas();
