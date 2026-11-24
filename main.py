@@ -41,21 +41,6 @@ def pagina_dashboard():
 
 
 # ---------- API: autenticación ----------
-
-@app.route("/api/registro", methods=["POST"])
-def api_registro():
-    datos = request.get_json(force=True)
-    try:
-        usuario = auth_service.registrar(
-            datos.get("nombre", "").strip(),
-            datos.get("email", "").strip().lower(),
-            datos.get("password", ""),
-        )
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-    return jsonify({"id": usuario.id, "nombre": usuario.nombre}), 201
-
-
 @app.route("/api/registro", methods=["POST"])
 def api_registro():
     datos = request.get_json(force=True)
