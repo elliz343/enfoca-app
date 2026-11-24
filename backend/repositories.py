@@ -24,7 +24,7 @@ class UsuarioRepository(BaseRepository):
     def crear(self, usuario: Usuario) -> Usuario:
         cur = self.conexion.cursor()
         cur.execute(
-            "INSERT INTO usuarios (nombre, email, password_hash) VALUES (?, ?, ?)",
+            "INSERT INTO usuarios (nombre, email, password_hash, email_verificado) VALUES (?, ?, ?,0)",
             (usuario.nombre, usuario.email, usuario.password_hash),
         )
         self.conexion.commit()
@@ -52,6 +52,7 @@ class UsuarioRepository(BaseRepository):
             nombre=fila["nombre"],
             email=fila["email"],
             password_hash=fila["password_hash"],
+            email_verificado=bool(fila["email_verificado"]),
         )
 
 
