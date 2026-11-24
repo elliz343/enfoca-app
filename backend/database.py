@@ -30,7 +30,9 @@ class Database:
                 nombre TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL,
                 password_hash TEXT NOT NULL
-                email_verificado INTEGER NOT NULL DEFAULT 1
+                email_verificado INTEGER NOT NULL DEFAULT 1,
+                token_verificacion_hash TEXT,
+                token_verificacion_expira TEXT
             )
         """)
         cur.execute("""
@@ -51,6 +53,15 @@ class Database:
             cur.execute(
                 "ALTER TABLE usuarios "
                 "ADD COLUMN email_verificado INTEGER NOT NULL DEFAULT 1"
+            )
+        if "token_verificacion_hash" not in columnas:
+            cur.execute(
+                "ALTER TABLE usuarios ADD COLUMN token_verificacion_hash TEXT"
+            )
+
+        if "token_verificacion_expira" not in columnas:
+            cur.execute(
+                "ALTER TABLE usuarios ADD COLUMN token_verificacion_expira TEXT"
             )
         self.conexion.commit()
   
