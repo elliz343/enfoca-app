@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,12 +51,18 @@
 async function cargarTareas() {
   const cont = document.getElementById('lista-tareas');
   const res = await fetch('/api/tareas');
-  if (res.status === 401) { window.location.href = '/login'; return; }
+  if (res.status === 401) {
+    window.location.href = '/login';
+    return;
+  }
+
   const tareas = await res.json();
+
   if (tareas.length === 0) {
     cont.innerHTML = '<p style="color:var(--suave);">No tienes tareas todavía. Agrega la primera arriba.</p>';
     return;
   }
+
   cont.innerHTML = tareas.map(t => `
     <div class="tarea" data-id="${t.id}">
       <div class="info">
@@ -74,6 +81,7 @@ async function borrarTarea(id) {
 
 document.getElementById('form-tarea').addEventListener('submit', async (e) => {
   e.preventDefault();
+
   await fetch('/api/tareas', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -83,6 +91,7 @@ document.getElementById('form-tarea').addEventListener('submit', async (e) => {
       fecha: document.getElementById('fecha').value
     })
   });
+
   document.getElementById('form-tarea').reset();
   cargarTareas();
 });
@@ -94,11 +103,16 @@ document.getElementById('btn-salir').addEventListener('click', async () => {
 
 (async () => {
   const res = await fetch('/api/sesion');
-  if (res.status === 401) { window.location.href = '/login'; return; }
+  if (res.status === 401) {
+    window.location.href = '/login';
+    return;
+  }
+
   const data = await res.json();
   document.getElementById('saludo').textContent = 'Hola, ' + data.nombre;
   cargarTareas();
 })();
 </script>
+
 </body>
 </html>
