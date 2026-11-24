@@ -30,6 +30,7 @@ class Database:
                 nombre TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL,
                 password_hash TEXT NOT NULL
+                email_verificado INTEGER NOT NULL DEFAULT 1
             )
         """)
         cur.execute("""
@@ -42,7 +43,16 @@ class Database:
                 FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
             )
         """)
+    columnas = {
+            fila["name"]
+            for fila in cur.execute("PRAGMA table_info(usuarios)")
+        }
+        if "email_verificado" not in columnas:
+            cur.execute(
+                "ALTER TABLE usuarios "
+                "ADD COLUMN email_verificado INTEGER NOT NULL DEFAULT 1"
+            )
         self.conexion.commit()
-
+  
     def obtener_conexion(self):
         return self.conexion
