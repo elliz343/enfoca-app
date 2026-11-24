@@ -15,29 +15,12 @@ from .models import Usuario, Tarea
 
 class AuthService:
     def __init__(self, usuario_repo: UsuarioRepository = None):
-        # Inyección de dependencias: si no se pasa un repo, usa el real.
-        # Facilita probar el servicio con un repositorio falso (mock).
         self.usuario_repo = usuario_repo or UsuarioRepository()
 
     def registrar(self, nombre: str, email: str, password: str) -> Usuario:
         if not nombre or not email or not password:
             raise ValueError("Todos los campos son obligatorios")
-    def crear_token_verificacion(self, email: str) -> str:
-        token = secrets.token_urlsafe(32)
-        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
-        expira = (
-            datetime.now(timezone.utc) + timedelta(hours=24)
-        ).isoformat()
 
-        self.usuario_repo.guardar_token_verificacion(
-            email, token_hash, expira
-        )
-        return token
-
-    def verificar_email(self, token: str) -> bool:
-        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
-        ahora = datetime.now(timezone.utc).isoformat()
-        return self.usuario_repo.verificar_email(token_hash, ahora)
         email = email.strip().lower()
         partes = email.split("@")
 
@@ -62,15 +45,40 @@ class AuthService:
             nombre=nombre,
             email=email,
             password_hash=generate_password_hash(password),
+            email_verificado=False,
         )
         return self.usuario_repo.crear(usuario)
 
+    def crear_token_verificacion(self, email: str) -> str:
+        token = secrets.token_urlsafe(32)
+        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        expira = (
+            datetime.now(timezone.utc) + timedelta(hours=24)
+        ).isoformat()
+
+        self.usuario_repo.guardar_token_verificacion(
+            email, token_hash, expira
+        )
+        return token
+
+    def verificar_email(self, token: str) -> bool:
+        if not token:
+            return False
+
+        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        ahora = datetime.now(timezone.utc).isoformat()
+        return self.usuario_repo.verificar_email(token_hash, ahora)
+
     def iniciar_sesion(self, email: str, password: str) -> Usuario:
+        email = email.strip().lower()
         usuario = self.usuario_repo.obtener_por_email(email)
+
         if not usuario or not check_password_hash(usuario.password_hash, password):
             raise ValueError("Correo o contraseña incorrectos")
+
         if not usuario.email_verificado:
             raise ValueError("Confirma tu correo antes de iniciar sesión")
+
         return usuario
     
 
