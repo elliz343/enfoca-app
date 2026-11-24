@@ -29,7 +29,7 @@ class Database:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL,
-                password_hash TEXT NOT NULL
+                password_hash TEXT NOT NULL,
                 email_verificado INTEGER NOT NULL DEFAULT 1,
                 token_verificacion_hash TEXT,
                 token_verificacion_expira TEXT
@@ -45,7 +45,7 @@ class Database:
                 FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
             )
         """)
-    columnas = {
+        columnas = {     
             fila["name"]
             for fila in cur.execute("PRAGMA table_info(usuarios)")
         }
