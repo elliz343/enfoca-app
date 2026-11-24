@@ -413,6 +413,7 @@ footer {
   color: var(--azul-oscuro);
   border-top: 1px solid var(--borde);
 }
+
 .login-hero {
   position: relative;
   isolation: isolate;
@@ -599,6 +600,193 @@ footer {
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
 }
 
+/* ============================================================
+   REGISTRO (solo afecta a la página de crear cuenta)
+   ============================================================ */
+
+/* Encabezado del registro: solo con <body class="pagina-registro"> */
+.pagina-registro .navbar a.logo {
+  font-size: 1.7rem;
+}
+
+.pagina-registro .navbar .nav-pregunta {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--azul);
+}
+
+.pagina-registro .navbar nav a.btn-texto {
+  padding: 0.45rem 1rem;
+  border: 2px solid var(--azul);
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* Pie del registro: franja blanca con letras azules */
+.pagina-registro footer {
+  margin-top: 0;
+  background: var(--blanco);
+  color: var(--azul-oscuro);
+  border-top: 1px solid var(--borde);
+}
+
+.registro-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+  align-items: stretch;
+  gap: 3rem;
+  width: 100%;
+  max-width: none;
+  min-height: max(720px, calc(100vh - 150px));
+  margin: 0;
+  padding: 2rem clamp(1.5rem, 5vw, 5rem) 0;
+  overflow: hidden;
+  background: var(--azul-oscuro);
+}
+
+/* Ondas celestes, siguiendo el boceto */
+.registro-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 840' preserveAspectRatio='none'%3E%3Cpath fill='%234db8ff' d='M0 0H250C228 40 190 64 138 84C80 106 30 128 0 172Z'/%3E%3Cpath fill='%232f86e0' d='M1180 0C1215 60 1290 100 1380 92C1460 85 1540 90 1600 130V60C1540 45 1470 50 1420 58C1350 66 1300 40 1280 0Z'/%3E%3Cpath fill='%234db8ff' d='M1135 0C1165 55 1230 95 1320 95C1400 95 1450 70 1520 72C1560 74 1585 85 1600 95V0Z'/%3E%3Cpath fill='%234db8ff' d='M1600 150C1540 150 1495 200 1500 262C1505 320 1560 350 1600 420Z'/%3E%3Cpath fill='%232f86e0' d='M1600 590C1540 620 1500 690 1440 745C1385 795 1310 828 1225 840H1600Z'/%3E%3Cpath fill='%234db8ff' d='M1600 660C1550 690 1510 750 1450 795C1415 820 1370 835 1320 840H1600Z'/%3E%3Cpath fill='%232f86e0' d='M0 610C70 610 130 650 160 715C182 762 210 810 260 840H0Z'/%3E%3Cpath fill='%234db8ff' d='M0 690C50 690 100 725 125 775C140 805 160 825 185 840H0Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.registro-presentacion {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 650px;
+}
+
+.registro-copy {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-top: clamp(3rem, 8vh, 5.5rem);
+  transform: rotate(-3deg);
+  transform-origin: left top;
+}
+
+.registro-copy h1 {
+  color: #fff;
+  font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.registro-copy h2 {
+  margin-top: 0.5rem;
+  color: var(--azul-oscuro);
+  font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.registro-copy h2 span {
+  display: table;
+  padding: 0.05em 0.4em 0.1em;
+  border-radius: 16px;
+  background: var(--verde);
+  color: var(--azul-oscuro);
+}
+
+.registro-copy p {
+  max-width: 40ch;
+  margin-top: 1.4rem;
+  color: #fff;
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.registro-copy p::after {
+  content: "";
+  display: block;
+  width: 240px;
+  height: 4px;
+  margin-top: 0.8rem;
+  border-radius: 4px;
+  background: var(--verde);
+}
+
+/* Ilustración dibujada en SVG, más arriba y completa */
+.registro-ilustracion {
+  position: absolute;
+  z-index: 1;
+  left: -1rem;
+  bottom: 1.5%;
+  width: min(104%, 700px);
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Tarjeta del formulario */
+.registro-hero .panel-form {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto 2rem;
+  padding: 2.5rem;
+  border: none;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+}
+
+.registro-hero .panel-form h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.registro-hero .panel-form .sub {
+  font-size: 1rem;
+}
+
+.registro-hero .campo label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.registro-hero .campo input {
+  padding: 0.8rem 0.9rem 0.8rem 2.8rem;
+  border-radius: 10px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: 0.9rem center;
+  background-size: 20px;
+}
+
+/* Íconos dentro de los campos */
+.pagina-registro #nombre {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23566783' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7'/%3E%3C/svg%3E");
+}
+
+.pagina-registro #email {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23566783' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E");
+}
+
+.pagina-registro #password {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23566783' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='11' width='14' height='10' rx='2'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E");
+}
+
+.registro-hero .panel-form .btn {
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
 /* Ajustes para pantallas medianas */
 @media (min-width: 640px) {
   .grid-tarjetas {
@@ -684,6 +872,59 @@ footer {
   }
 
   .login-hero .panel-form {
+    padding: 1.5rem;
+  }
+}
+
+/* Registro: pantallas medianas */
+@media (max-width: 900px) {
+  .registro-hero {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    min-height: 0;
+    padding-bottom: 2rem;
+  }
+
+  .registro-presentacion {
+    min-height: 640px;
+  }
+
+  .registro-ilustracion {
+    left: 0;
+    width: min(100%, 600px);
+  }
+
+  .registro-hero .panel-form {
+    max-width: 560px;
+    margin-bottom: 0;
+  }
+}
+
+/* Registro: móviles */
+@media (max-width: 640px) {
+  .registro-hero {
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+  }
+
+  .pagina-registro .navbar .nav-pregunta {
+    display: none;
+  }
+
+  .registro-copy h1,
+  .registro-copy h2 {
+    font-size: clamp(1.9rem, 8vw, 2.6rem);
+  }
+
+  .registro-copy p {
+    font-size: 1.1rem;
+  }
+
+  .registro-presentacion {
+    min-height: 600px;
+  }
+
+  .registro-hero .panel-form {
     padding: 1.5rem;
   }
 }
