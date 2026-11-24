@@ -80,6 +80,22 @@ def api_verificar_correo():
         return "El enlace de verificación no es válido o ya venció.", 400
 
     return "Correo verificado. Ya puedes iniciar sesión."
+@app.route("/api/login", methods=["POST"])
+def api_login():
+    datos = request.get_json(force=True)
+
+    try:
+        usuario = auth_service.iniciar_sesion(
+            datos.get("email", "").strip().lower(),
+            datos.get("password", ""),
+        )
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 401
+
+    session["usuario_id"] = usuario.id
+    session["usuario_nombre"] = usuario.nombre
+
+    return jsonify({"id": usuario.id, "nombre": usuario.nombre})
 
 @app.route("/api/logout", methods=["POST"])
 def api_logout():
