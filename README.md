@@ -11,7 +11,7 @@
    
 $env:SMTP_HOST = "smtp.gmail.com"
 $env:SMTP_PORT = "587"
-$env:SMTP_USERNAME = "thomassantiagodamian@gmail.com"     - PRESS ENTER.
+$env:SMTP_USERNAME = "thomassantiagodamian@gmail.com"    
 $env:SMTP_FROM = "thomassantiagodamian@gmail.com"         - PRESS ENTER.
 
 Luego de eso, copiar:     $secure = Read-Host -Prompt "Contraseña de aplicación" -AsSecureString       - PRESS ENTER
