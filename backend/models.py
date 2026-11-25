@@ -12,6 +12,7 @@ class Usuario:
     nombre: str
     email: str
     password_hash: str
+    email_verificado: bool = True
 
 
 @dataclass

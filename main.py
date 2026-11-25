@@ -4,8 +4,9 @@ Punto de entrada de la aplicación. Define las rutas (endpoints) y
 los verbos HTTP que atiende cada una. No contiene lógica de negocio
 ni de base de datos: eso vive en backend/services.py y backend/repositories.py.
 """
-from flask import Flask, render_template, request, jsonify, session, redirect
-
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+import smtplib
+from backend.email_service import enviar_correo
 from backend.services import AuthService, TareaService
 
 app = Flask(__name__)
@@ -40,10 +41,10 @@ def pagina_dashboard():
 
 
 # ---------- API: autenticación ----------
-
 @app.route("/api/registro", methods=["POST"])
 def api_registro():
     datos = request.get_json(force=True)
+
     try:
         usuario = auth_service.registrar(
             datos.get("nombre", "").strip(),
@@ -52,12 +53,37 @@ def api_registro():
         )
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
-    return jsonify({"id": usuario.id, "nombre": usuario.nombre}), 201
 
+    token = auth_service.crear_token_verificacion(usuario.email)
+    enlace = url_for("api_verificar_correo", token=token, _external=True)
 
+    try:
+        enviar_correo(
+            usuario.email,
+            "Confirma tu cuenta de Enfoca",
+            f"Abre este enlace para verificar tu correo: {enlace}",
+        )
+    except (KeyError, OSError, smtplib.SMTPException):
+        return jsonify({"error": "No se pudo enviar el correo de verificación."}), 503
+
+    return jsonify({
+        "id": usuario.id,
+        "nombre": usuario.nombre,
+        "mensaje": "Revisa tu correo y abre el enlace para activar la cuenta.",
+    }), 201
+    
+@app.route("/api/verificar-correo", methods=["GET"])
+def api_verificar_correo():
+    token = request.args.get("token", "")
+
+    if not auth_service.verificar_email(token):
+        return "El enlace de verificación no es válido o ya venció.", 400
+
+    return "Correo verificado. Ya puedes iniciar sesión."
 @app.route("/api/login", methods=["POST"])
 def api_login():
     datos = request.get_json(force=True)
+
     try:
         usuario = auth_service.iniciar_sesion(
             datos.get("email", "").strip().lower(),
@@ -65,10 +91,11 @@ def api_login():
         )
     except ValueError as e:
         return jsonify({"error": str(e)}), 401
+
     session["usuario_id"] = usuario.id
     session["usuario_nombre"] = usuario.nombre
-    return jsonify({"id": usuario.id, "nombre": usuario.nombre})
 
+    return jsonify({"id": usuario.id, "nombre": usuario.nombre})
 
 @app.route("/api/logout", methods=["POST"])
 def api_logout():
