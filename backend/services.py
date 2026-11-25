@@ -41,7 +41,7 @@ class AuthService:
 
         if usuario_existente:
             if usuario_existente.email_verificado:
-            raise ValueError("Ese correo ya está registrado")
+                raise ValueError("Ese correo ya está registrado")
         return usuario_existente
 
         usuario = Usuario(
