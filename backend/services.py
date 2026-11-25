@@ -37,7 +37,7 @@ class AuthService:
         if len(password) < 6:
             raise ValueError("La contraseña debe tener al menos 6 caracteres")
 
-      usuario_existente = self.usuario_repo.obtener_por_email(email)
+        usuario_existente = self.usuario_repo.obtener_por_email(email)
 
         if usuario_existente:
             if usuario_existente.email_verificado:
